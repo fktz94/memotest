@@ -48,3 +48,25 @@ function randomizarImagenes() {
 }
 
 randomizarImagenes();
+
+tarjetas = document.querySelectorAll(".cuadro");
+tarjetas.forEach(function ($tarjeta) {
+  $tarjeta.onclick = recibirPrimerClick;
+});
+
+contadorDeAciertos = 0;
+
+function recibirPrimerClick(e) {
+  $tarjeta = e.target;
+  $tarjeta = $tarjeta.id;
+  numeroID = $tarjeta.match(/\d/g);
+  if (numeroID.length > 1) {
+    numeroID = numeroID.join("");
+  }
+  numeroID = numeroID.toString();
+  console.log(numeroID);
+  back = document.getElementById(`back-${numeroID}`);
+  back.style.backfaceVisibility = "visible";
+  back.style.transform = "rotateY(0deg)";
+}
+

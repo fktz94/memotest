@@ -57,6 +57,15 @@ tarjetas.forEach(function ($tarjeta) {
 });
 
 IDs = [];
+cuadrosBloqueados = [];
+
+function bloquearCuadros(cuadros) {
+  if (cuadros.length > 0) {
+    cuadros.forEach(function (cuadro) {
+      cuadro.onclick = function () {};
+    });
+  }
+}
 
 function recibirClicks(e) {
   $tarjeta = e.target;
@@ -67,16 +76,15 @@ function recibirClicks(e) {
   }
   numeroID = numeroID.toString();
   IDs.push(numeroID);
-  back1 = document.getElementById(`back-${IDs[0]}`);
-  back1.style.backfaceVisibility = "visible";
-  back1.style.transform = "rotateY(0deg)";
-  back1.style.cursor = "auto";
-  arrayComparativo.push(back1);
-  cuadro1 = document.getElementById(`pos-${IDs[0]}`);
-  cuadro1.onclick = function () {};
-  console.log(IDs);
-
-  if (IDs.length > 1) {
+  if (IDs.length === 1) {
+    back1 = document.getElementById(`back-${IDs[0]}`);
+    back1.style.backfaceVisibility = "visible";
+    back1.style.transform = "rotateY(0deg)";
+    back1.style.cursor = "auto";
+    arrayComparativo.push(back1);
+    cuadro1 = document.getElementById(`pos-${IDs[0]}`);
+    cuadro1.onclick = function () {};
+  } else if (IDs.length > 1) {
     back2 = document.getElementById(`back-${IDs[1]}`);
     back2.style.backfaceVisibility = "visible";
     back2.style.transform = "rotateY(0deg)";
@@ -85,40 +93,42 @@ function recibirClicks(e) {
     cuadro2 = document.getElementById(`pos-${IDs[1]}`);
     cuadro2.onclick = function () {};
 
-    console.log(IDs);
-    comparar(back1, cuadro1, back2, cuadro2);
-  }
-
-  /*
-  ESTO NO FUNCIONA, ME FALTA RESOLVER QUÉ MIENTRAS COMPARE LAS 2 OPCIONES NO SE PUEDA CLICKEAR NADA
-  
-  if (IDs.length === 2) {
-    tarjetas = document.querySelectorAll(".cuadro");
-    tarjetas.forEach(function ($tarjeta) {
-      $tarjeta.onclick = "";
-    });
-    setTimeout(function () {
+    if (IDs.length === 2) {
       tarjetas = document.querySelectorAll(".cuadro");
       tarjetas.forEach(function ($tarjeta) {
-        $tarjeta.onclick = recibirClicks;
-      }, 200);
-    });
-  }*/
+        $tarjeta.onclick = function () {};
+        $tarjeta.style.pointerEvents = "none";
+      });
+    }
+    comparar(back1, cuadro1, back2, cuadro2);
+  }
+  
 }
 
 function comparar(back1, cuadro1, back2, cuadro2) {
-  if (arrayComparativo[1].src === arrayComparativo[2].src) {
+  if (arrayComparativo[0].src === arrayComparativo[1].src) {
     back1.classList.add("encontrado");
     back2.classList.add("encontrado");
+    cuadrosBloqueados.push(cuadro1)
+    cuadrosBloqueados.push(cuadro2)
 
     IDs = [];
     arrayComparativo = [];
 
     contadorDeAciertos++;
+
+    tarjetas = document.querySelectorAll(".cuadro");
+    tarjetas.forEach(function ($tarjeta) {
+      $tarjeta.onclick = recibirClicks;
+      $tarjeta.style.pointerEvents = "all";
+    });
+
+    bloquearCuadros(cuadrosBloqueados);
+
     if (contadorDeAciertos === 9) {
-      ganar();
+      // ganar();
     }
-  } else if (arrayComparativo[1].src !== arrayComparativo[2].src) {
+  } else if (arrayComparativo[0].src !== arrayComparativo[1].src) {
     setTimeout(noSonIguales, 500);
     function noSonIguales() {
       back1.style.cssText = "";
@@ -127,12 +137,22 @@ function comparar(back1, cuadro1, back2, cuadro2) {
       cuadro1.onclick = recibirClicks;
       cuadro2.onclick = recibirClicks;
 
+      tarjetas = document.querySelectorAll(".cuadro");
+      tarjetas.forEach(function ($tarjeta) {
+        $tarjeta.onclick = recibirClicks;
+        $tarjeta.style.pointerEvents = "all";
+      });
+
+      console.log(cuadrosBloqueados);
+      /*a*/
       IDs = [];
       arrayComparativo = [];
     }
   }
 }
 
-function ganar() {
-  console.log("ganastes");
-}
+// function ganar() {
+//   $divGanaste = document.getElementById("ganaste")
+//   $divGanaste.style.display = "block"
+
+// }

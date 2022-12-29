@@ -46,17 +46,19 @@ function randomizarImagenes() {
     arrayDeJugadores.splice(imagenABorrar, 1);
   }
 }
-
 randomizarImagenes();
+
+contadorDeAciertos = 0;
+arrayComparativo = [];
 
 tarjetas = document.querySelectorAll(".cuadro");
 tarjetas.forEach(function ($tarjeta) {
-  $tarjeta.onclick = recibirPrimerClick;
+  $tarjeta.onclick = recibirClicks;
 });
 
-contadorDeAciertos = 0;
+IDs = [];
 
-function recibirPrimerClick(e) {
+function recibirClicks(e) {
   $tarjeta = e.target;
   $tarjeta = $tarjeta.id;
   numeroID = $tarjeta.match(/\d/g);
@@ -64,9 +66,73 @@ function recibirPrimerClick(e) {
     numeroID = numeroID.join("");
   }
   numeroID = numeroID.toString();
-  console.log(numeroID);
-  back = document.getElementById(`back-${numeroID}`);
-  back.style.backfaceVisibility = "visible";
-  back.style.transform = "rotateY(0deg)";
+  IDs.push(numeroID);
+  back1 = document.getElementById(`back-${IDs[0]}`);
+  back1.style.backfaceVisibility = "visible";
+  back1.style.transform = "rotateY(0deg)";
+  back1.style.cursor = "auto";
+  arrayComparativo.push(back1);
+  cuadro1 = document.getElementById(`pos-${IDs[0]}`);
+  cuadro1.onclick = function () {};
+  console.log(IDs);
+
+  if (IDs.length > 1) {
+    back2 = document.getElementById(`back-${IDs[1]}`);
+    back2.style.backfaceVisibility = "visible";
+    back2.style.transform = "rotateY(0deg)";
+    back2.style.cursor = "auto";
+    arrayComparativo.push(back2);
+    cuadro2 = document.getElementById(`pos-${IDs[1]}`);
+    cuadro2.onclick = function () {};
+
+    console.log(IDs);
+    comparar(back1, cuadro1, back2, cuadro2);
+  }
+
+  /*
+  ESTO NO FUNCIONA, ME FALTA RESOLVER QUÉ MIENTRAS COMPARE LAS 2 OPCIONES NO SE PUEDA CLICKEAR NADA
+  
+  if (IDs.length === 2) {
+    tarjetas = document.querySelectorAll(".cuadro");
+    tarjetas.forEach(function ($tarjeta) {
+      $tarjeta.onclick = "";
+    });
+    setTimeout(function () {
+      tarjetas = document.querySelectorAll(".cuadro");
+      tarjetas.forEach(function ($tarjeta) {
+        $tarjeta.onclick = recibirClicks;
+      }, 200);
+    });
+  }*/
 }
 
+function comparar(back1, cuadro1, back2, cuadro2) {
+  if (arrayComparativo[1].src === arrayComparativo[2].src) {
+    back1.classList.add("encontrado");
+    back2.classList.add("encontrado");
+
+    IDs = [];
+    arrayComparativo = [];
+
+    contadorDeAciertos++;
+    if (contadorDeAciertos === 9) {
+      ganar();
+    }
+  } else if (arrayComparativo[1].src !== arrayComparativo[2].src) {
+    setTimeout(noSonIguales, 500);
+    function noSonIguales() {
+      back1.style.cssText = "";
+      back2.style.cssText = "";
+
+      cuadro1.onclick = recibirClicks;
+      cuadro2.onclick = recibirClicks;
+
+      IDs = [];
+      arrayComparativo = [];
+    }
+  }
+}
+
+function ganar() {
+  console.log("ganastes");
+}

@@ -36,14 +36,23 @@ img:hover {
   transform: rotateY(180deg);
 }
 
-.cuadro:active img:nth-child(2) {
-  transform: rotateY(0deg);
-}
-
 .cuadro:active img:nth-child(1) {
   transform: rotateY(-180deg);
 }
 
+.cuadro:active img:nth-child(2) {
+  transform: rotateY(0deg);
+}
+
 .fotos {
+  display: none;
+}
+
+.encontrado {
+  filter: blur(0.5px) grayscale(80%);
+}
+
+.ganaste {
+  position: absolute;
   display: none;
 }

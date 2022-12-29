@@ -102,15 +102,14 @@ function recibirClicks(e) {
     }
     comparar(back1, cuadro1, back2, cuadro2);
   }
-  
 }
 
 function comparar(back1, cuadro1, back2, cuadro2) {
   if (arrayComparativo[0].src === arrayComparativo[1].src) {
     back1.classList.add("encontrado");
     back2.classList.add("encontrado");
-    cuadrosBloqueados.push(cuadro1)
-    cuadrosBloqueados.push(cuadro2)
+    cuadrosBloqueados.push(cuadro1);
+    cuadrosBloqueados.push(cuadro2);
 
     IDs = [];
     arrayComparativo = [];
@@ -124,9 +123,8 @@ function comparar(back1, cuadro1, back2, cuadro2) {
     });
 
     bloquearCuadros(cuadrosBloqueados);
-
     if (contadorDeAciertos === 9) {
-      // ganar();
+      ganar();
     }
   } else if (arrayComparativo[0].src !== arrayComparativo[1].src) {
     setTimeout(noSonIguales, 500);
@@ -143,16 +141,44 @@ function comparar(back1, cuadro1, back2, cuadro2) {
         $tarjeta.style.pointerEvents = "all";
       });
 
-      console.log(cuadrosBloqueados);
-      /*a*/
       IDs = [];
       arrayComparativo = [];
     }
   }
 }
 
-// function ganar() {
-//   $divGanaste = document.getElementById("ganaste")
-//   $divGanaste.style.display = "block"
+function ganar() {
+  $divGanaste = document.getElementById("ganaste");
+  $divGanaste.classList.remove("d-none");
+}
 
-// }
+$botonVolverAJugar = document.getElementById("ganaste-btn");
+$botonVolverAJugar.onclick = volverAJugar;
+
+function volverAJugar() {
+  todosLosBack = document.querySelectorAll(".back");
+  todosLosBack.forEach(function (back) {
+    back.classList.remove("encontrado");
+    back.style.cssText = "";
+  });
+
+  arrayDeJugadores = [];
+  cargarArrayDeJugadores();
+
+  arrayDeCuadros = [];
+  cargarArrayDeCuadros();
+
+  posiciones = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+  randomizarImagenes();
+  contadorDeAciertos = 0;
+  arrayComparativo = [];
+  IDs = [];
+  cuadrosBloqueados = [];
+
+  tarjetas = document.querySelectorAll(".cuadro");
+  tarjetas.forEach(function ($tarjeta) {
+    $tarjeta.onclick = recibirClicks;
+  });
+  $divGanaste = document.getElementById("ganaste");
+  $divGanaste.classList.add("d-none");
+}

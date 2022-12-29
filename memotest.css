@@ -21,7 +21,6 @@
   transform-style: preserve-3d;
   perspective: 1000px;
   transition: all linear 200ms;
-  
 }
 
 .back {
@@ -54,6 +53,9 @@ img:hover {
 }
 
 #ganaste {
-  position: absolute;
-  display: none;
+  transition: all ease-in 500ms;
+}
+
+#ganaste-txt {
+  font-size: 5rem;
 }

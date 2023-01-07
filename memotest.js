@@ -127,24 +127,25 @@ function comparar(back1, cuadro1, back2, cuadro2) {
       ganar();
     }
   } else if (arrayComparativo[0].src !== arrayComparativo[1].src) {
-    setTimeout(noSonIguales, 500);
-    function noSonIguales() {
-      back1.style.cssText = "";
-      back2.style.cssText = "";
-
-      cuadro1.onclick = recibirClicks;
-      cuadro2.onclick = recibirClicks;
-
-      tarjetas = document.querySelectorAll(".cuadro");
-      tarjetas.forEach(function ($tarjeta) {
-        $tarjeta.onclick = recibirClicks;
-        $tarjeta.style.pointerEvents = "all";
-      });
-
-      IDs = [];
-      arrayComparativo = [];
-    }
+    setTimeout(volverCartasAlReverso, 500);
   }
+}
+
+function volverCartasAlReverso() {
+  back1.style.cssText = "";
+  back2.style.cssText = "";
+
+  cuadro1.onclick = recibirClicks;
+  cuadro2.onclick = recibirClicks;
+
+  tarjetas = document.querySelectorAll(".cuadro");
+  tarjetas.forEach(function ($tarjeta) {
+    $tarjeta.onclick = recibirClicks;
+    $tarjeta.style.pointerEvents = "all";
+  });
+
+  IDs = [];
+  arrayComparativo = [];
 }
 
 function ganar() {

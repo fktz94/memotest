@@ -1,0 +1,61 @@
+#title {
+  font-size: 5rem;
+  letter-spacing: 7px;
+  color: #cc3333;
+}
+
+.cuadro {
+  position: relative;
+  margin: 0.7rem;
+  width: 8rem;
+  height: 10rem;
+}
+
+.cuadro img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: all linear 200ms;
+}
+
+.back {
+  object-position: top;
+}
+
+img:hover {
+  cursor: pointer;
+  transform: translate(0, -0.3rem) rotate(3deg) scale(1.1);
+}
+
+.cuadro img:nth-child(2) {
+  transform: rotateY(180deg);
+}
+
+.cuadro:active img:nth-child(1) {
+  transform: rotateY(-180deg);
+}
+
+.cuadro:active img:nth-child(2) {
+  transform: rotateY(0deg);
+}
+
+.fotos {
+  display: none;
+}
+
+.encontrado {
+  filter: blur(0.5px) grayscale(80%);
+}
+
+#ganaste {
+  transition: all ease-in 500ms;
+}
+
+#ganaste-txt {
+  font-size: 5rem;
+}
